@@ -1,4 +1,4 @@
-package database
+package storage
 
 import (
 	"github.com/divyag9/goqueues/packages/queue"
@@ -20,7 +20,7 @@ func GetQueueDetailsByID(da DataAccessor, id int) (*queue.Details, error) {
 	return da.Get(id)
 }
 
-// GetAllQueueDetails returns the details of all queue
+// GetAllQueueDetails returns the details of all queues
 func GetAllQueueDetails(da DataAccessor) ([]*queue.Details, error) {
 	return da.GetAll()
 }
