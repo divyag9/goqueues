@@ -15,7 +15,7 @@ import (
 
 // HandleInsert saves the queue details
 func HandleInsert(w http.ResponseWriter, r *http.Request) {
-	mongoSession := context.Get(r, "database").(*mgo.Session)
+	mongoSession := context.Get(r, "dbsession").(*mgo.Session)
 	mongoDB := &storage.Mongo{}
 	mongoDB.Session = mongoSession
 
@@ -51,7 +51,7 @@ func HandleInsert(w http.ResponseWriter, r *http.Request) {
 
 // HandleRead retrieves the queue details
 func HandleRead(w http.ResponseWriter, r *http.Request) {
-	mongoSession := context.Get(r, "database").(*mgo.Session)
+	mongoSession := context.Get(r, "dbsession").(*mgo.Session)
 	mongoDB := &storage.Mongo{}
 	mongoDB.Session = mongoSession
 

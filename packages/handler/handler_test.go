@@ -5,11 +5,10 @@ import (
 	"net/http/httptest"
 	"testing"
 
+	"github.com/divyag9/goqueues/packages/storage"
 	"github.com/gorilla/context"
 
 	"bytes"
-
-	mgo "gopkg.in/mgo.v2"
 )
 
 func TestHandleInsert(t *testing.T) {
@@ -19,12 +18,9 @@ func TestHandleInsert(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	dbsession, err := mgo.Dial("mongodb://localhost")
-	if err != nil {
-		t.Fatalf("cannot dial mongo %v", err)
-	}
+	dbsession := storage.GetMongoDBSession()
 	defer dbsession.Close()
-	context.Set(req, "database", dbsession)
+	context.Set(req, "dbsession", dbsession)
 	// Create a ResponseRecorder to record the response.
 	rr := httptest.NewRecorder()
 	handler := http.HandlerFunc(HandleInsert)
@@ -50,12 +46,9 @@ func TestHandleRead(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	dbsession, err := mgo.Dial("mongodb://localhost")
-	if err != nil {
-		t.Fatalf("cannot dial mongo %v", err)
-	}
+	dbsession := storage.GetMongoDBSession()
 	defer dbsession.Close()
-	context.Set(req, "database", dbsession)
+	context.Set(req, "dbsession", dbsession)
 	// Create a ResponseRecorder to record the response.
 	rr := httptest.NewRecorder()
 	handler := http.HandlerFunc(HandleRead)

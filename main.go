@@ -5,19 +5,14 @@ import (
 	"net/http"
 
 	"github.com/divyag9/goqueues/packages/handler"
+	"github.com/divyag9/goqueues/packages/storage"
 	"github.com/gorilla/context"
 	mgo "gopkg.in/mgo.v2"
 )
 
 func main() {
-	// Get the mongodb session and pass to the handler
-	dbsession, err := mgo.Dial("mongodb://localhost")
-	if err != nil {
-		log.Fatalln("cannot dial mongo ", err)
-	}
-	log.Println("connected to mongodb")
+	dbsession := storage.GetMongoDBSession()
 	defer dbsession.Close()
-
 	// Handler for incoming request
 	http.HandleFunc("/", DBHandler(handle, dbsession))
 	// Start the server
@@ -29,10 +24,15 @@ func main() {
 // DBHandler is a wrapper for the underlying http handler
 func DBHandler(fn http.HandlerFunc, dbsession interface{}) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		dbcopy := dbsession.(*mgo.Session).Copy()
-		defer dbcopy.Close()
-		context.Set(r, "database", dbcopy)
-		fn(w, r)
+		switch sessionType := dbsession.(type) {
+		case *mgo.Session:
+			dbsessionCopy := sessionType.Copy()
+			defer dbsessionCopy.Close()
+			context.Set(r, "dbsession", dbsessionCopy)
+			fn(w, r)
+		default:
+			log.Fatalln("unknown session")
+		}
 	}
 }
 
