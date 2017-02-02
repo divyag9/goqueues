@@ -3,6 +3,7 @@ package main
 import (
 	"log"
 	"net/http"
+	"os"
 
 	"github.com/divyag9/goqueues/packages/handler"
 	"github.com/divyag9/goqueues/packages/storage"
@@ -14,9 +15,9 @@ func main() {
 	dbsession := storage.GetMongoDBSession()
 	defer dbsession.Close()
 	// Handler for incoming request
-	http.HandleFunc("/", DBHandler(handle, dbsession))
+	http.HandleFunc("/queues", DBHandler(handle, dbsession))
 	// Start the server
-	if err := http.ListenAndServe(":8080", nil); err != nil {
+	if err := http.ListenAndServeTLS(":443", os.Getenv("CERT_PATH"), os.Getenv("KEY_PATH"), nil); err != nil {
 		log.Fatal(err)
 	}
 }

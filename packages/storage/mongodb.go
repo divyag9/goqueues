@@ -29,7 +29,7 @@ func GetMongoDBSession() *mgo.Session {
 	// Dial mongoDB
 	dbsession, err := mgo.DialWithInfo(mongoDBDialInfo)
 	if err != nil {
-		log.Fatalln("cannot dial mongo ", err)
+		log.Fatalln("cannot dial mongo: ", err)
 	}
 	log.Println("connected to mongodb")
 	return dbsession
