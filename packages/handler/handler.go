@@ -10,7 +10,6 @@ import (
 	"github.com/divyag9/goqueues/packages/storage"
 	"github.com/gorilla/context"
 	mgo "gopkg.in/mgo.v2"
-	"gopkg.in/mgo.v2/bson"
 )
 
 // HandleInsert saves the queue details
@@ -33,13 +32,12 @@ func HandleInsert(w http.ResponseWriter, r *http.Request) {
 	queueDetails.Depth = requestDetails.Depth
 	queueDetails.Rate = requestDetails.Rate
 	queueDetails.LastProcessed = requestDetails.LastProcessed
-	// Give the queue details a unique ID
-	queueDetails.ID = bson.NewObjectId()
 	queueDetails.LastReported = time.Now()
 
 	// Insert it into the database
 	if err := storage.SaveQueueDetails(mongoDB, queueDetails); err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
+		log.Println("Error saving queue details: ", err)
 		return
 	}
 	log.Println("Saved queue details")

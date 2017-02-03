@@ -8,7 +8,7 @@ import (
 
 // Details represents the information about a queue
 type Details struct {
-	ID            bson.ObjectId `bson:"_id"`
+	ID            bson.ObjectId `bson:"_id,omitempty"`
 	Name          string        `bson:"name"`
 	Type          string        `bson:"type"`
 	Depth         int64         `bson:"depth"`

@@ -7,6 +7,7 @@ import (
 
 	"github.com/divyag9/goqueues/packages/queue"
 	mgo "gopkg.in/mgo.v2"
+	"gopkg.in/mgo.v2/bson"
 )
 
 // Mongo contains the mongo database session
@@ -44,8 +45,9 @@ func (m *Mongo) Get(id int) (*queue.Details, error) {
 // GetAll returns the details of all queues
 func (m *Mongo) GetAll() ([]*queue.Details, error) {
 	var queueDetails []*queue.Details
-	if err := m.Session.DB("queues").C("details").
-		Find(nil).Sort("-depth").All(&queueDetails); err != nil {
+	err := m.Session.DB("queues").C("details").
+		Find(nil).All(&queueDetails)
+	if err != nil {
 		return nil, err
 	}
 	return queueDetails, nil
@@ -53,8 +55,11 @@ func (m *Mongo) GetAll() ([]*queue.Details, error) {
 
 // Save saves the queue details
 func (m *Mongo) Save(qd *queue.Details) error {
-	if err := m.Session.DB("queues").C("details").Insert(qd); err != nil {
+	changeInfo, err := m.Session.DB("queues").C("details").
+		Upsert(bson.M{"name": qd.Name, "type": qd.Type}, qd)
+	if err != nil {
 		return err
 	}
+	log.Println("Number of documents updated:", changeInfo.Updated)
 	return nil
 }
