@@ -1,57 +1,91 @@
 {
-	"id": "61270689-4c68-7bb6-a786-37a54090ba8d",
-	"name": "GOQUEUES",
-	"description": "",
-	"order": [
-		"268bcd82-5db6-a244-450c-d6bc7a5b1b84",
-		"ef66f2c8-cff6-6454-5597-055ae5148c88"
-	],
-	"folders": [],
-	"timestamp": 1486075551326,
-	"owner": "1266978",
-	"public": false,
-	"requests": [
+	"variables": [],
+	"info": {
+		"name": "GOQUEUES",
+		"_postman_id": "d168da12-bb72-6cff-a722-936decbb6ec7",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
 		{
-			"id": "268bcd82-5db6-a244-450c-d6bc7a5b1b84",
-			"headers": "",
-			"url": "https://localhost:443/queues",
-			"pathVariables": {},
-			"preRequestScript": null,
-			"method": "POST",
-			"collectionId": "61270689-4c68-7bb6-a786-37a54090ba8d",
-			"data": [],
-			"dataMode": "raw",
 			"name": "SaveQueueDetails",
-			"description": "",
-			"descriptionFormat": "html",
-			"time": 1486075551326,
-			"version": 2,
-			"responses": [],
-			"tests": null,
-			"currentHelper": "normal",
-			"helperAttributes": {},
-			"rawModeData": "{\r\n\t\"name\": \"spi\",\r\n\t\"type\": \"spi\",\r\n\t\"depth\": 1000,\r\n\t\"rate\": 10,\r\n\t\"lastprocessed\": \"2008-09-17T00:00:00Z\"\r\n}"
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"//  Did we get a proper response?",
+							"tests[\"Status code is 200\"] = responseCode.code === 200;",
+							"",
+							"// Parse the json response",
+							"var jsonData = JSON.parse(responseBody);",
+							"",
+							"// Was there an error?",
+							"tests[\"No Error\"] = jsonData.result == \"success\""
+						]
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"postman.setGlobalVariable('depth', Math.floor(Math.random() * 1000));",
+							"postman.setGlobalVariable('rate', Math.floor(Math.random() * 1000));",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "https://localhost:8443/queues",
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"name\": \"spi\",\r\n\t\"type\": \"spi\",\r\n\t\"depth\": {{depth}},\r\n\t\"rate\": {{rate}},\r\n\t\"lastprocessed\": \"2008-09-17T00:00:00Z\"\r\n}"
+				},
+				"description": ""
+			},
+			"response": []
 		},
 		{
-			"id": "ef66f2c8-cff6-6454-5597-055ae5148c88",
-			"headers": "",
-			"url": "https://localhost:443/queues",
-			"pathVariables": {},
-			"preRequestScript": null,
-			"method": "GET",
-			"collectionId": "61270689-4c68-7bb6-a786-37a54090ba8d",
-			"data": [],
-			"dataMode": "raw",
 			"name": "GetQueueDetails",
-			"description": "",
-			"descriptionFormat": "html",
-			"time": 1486075608587,
-			"version": 2,
-			"responses": [],
-			"tests": null,
-			"currentHelper": "normal",
-			"helperAttributes": {},
-			"rawModeData": "{\r\n\t\"name\": \"foo\",\r\n\t\"type\": \"bar\",\r\n\t\"depth\": 1000,\r\n\t\"rate\": 10,\r\n\t\"lastprocessed\": \"2008-09-17T20:04:26Z\"\r\n}"
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"//  Did we get a proper response?",
+							"tests[\"Status code is 200\"] = responseCode.code === 200;",
+							"",
+							"// Parse the json response",
+							"var jsonData = JSON.parse(responseBody);",
+							"",
+							"// Was there an error?",
+							"tests[\"Proper_Depth\"] = jsonData.Depth == postman.getEnvironmentVariable(\"depth\");",
+							"",
+							"// Was there an error?",
+							"tests[\"Proper_Rate\"] = jsonData.Rate == postman.getEnvironmentVariable(\"rate\");",
+							"",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "https://localhost:8443/queues",
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"name\": \"foo\",\r\n\t\"type\": \"bar\",\r\n\t\"depth\": 1000,\r\n\t\"rate\": 10,\r\n\t\"lastprocessed\": \"2008-09-17T20:04:26Z\"\r\n}"
+				},
+				"description": ""
+			},
+			"response": []
 		}
 	]
 }
