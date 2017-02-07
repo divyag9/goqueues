@@ -39,7 +39,7 @@
 				}
 			],
 			"request": {
-				"url": "https://localhost:8443/queues",
+				"url": "https://{{hostname}}:{{port}}/queues",
 				"method": "POST",
 				"header": [],
 				"body": {
@@ -76,7 +76,7 @@
 				}
 			],
 			"request": {
-				"url": "https://localhost:8443/queues",
+				"url": "https://{{hostname}}:{{port}}/queues",
 				"method": "GET",
 				"header": [],
 				"body": {
