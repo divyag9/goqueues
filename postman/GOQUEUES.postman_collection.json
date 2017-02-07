@@ -1,0 +1,57 @@
+{
+	"id": "61270689-4c68-7bb6-a786-37a54090ba8d",
+	"name": "GOQUEUES",
+	"description": "",
+	"order": [
+		"268bcd82-5db6-a244-450c-d6bc7a5b1b84",
+		"ef66f2c8-cff6-6454-5597-055ae5148c88"
+	],
+	"folders": [],
+	"timestamp": 1486075551326,
+	"owner": "1266978",
+	"public": false,
+	"requests": [
+		{
+			"id": "268bcd82-5db6-a244-450c-d6bc7a5b1b84",
+			"headers": "",
+			"url": "https://localhost:443/queues",
+			"pathVariables": {},
+			"preRequestScript": null,
+			"method": "POST",
+			"collectionId": "61270689-4c68-7bb6-a786-37a54090ba8d",
+			"data": [],
+			"dataMode": "raw",
+			"name": "SaveQueueDetails",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1486075551326,
+			"version": 2,
+			"responses": [],
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"rawModeData": "{\r\n\t\"name\": \"spi\",\r\n\t\"type\": \"spi\",\r\n\t\"depth\": 1000,\r\n\t\"rate\": 10,\r\n\t\"lastprocessed\": \"2008-09-17T00:00:00Z\"\r\n}"
+		},
+		{
+			"id": "ef66f2c8-cff6-6454-5597-055ae5148c88",
+			"headers": "",
+			"url": "https://localhost:443/queues",
+			"pathVariables": {},
+			"preRequestScript": null,
+			"method": "GET",
+			"collectionId": "61270689-4c68-7bb6-a786-37a54090ba8d",
+			"data": [],
+			"dataMode": "raw",
+			"name": "GetQueueDetails",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1486075608587,
+			"version": 2,
+			"responses": [],
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"rawModeData": "{\r\n\t\"name\": \"foo\",\r\n\t\"type\": \"bar\",\r\n\t\"depth\": 1000,\r\n\t\"rate\": 10,\r\n\t\"lastprocessed\": \"2008-09-17T20:04:26Z\"\r\n}"
+		}
+	]
+}
