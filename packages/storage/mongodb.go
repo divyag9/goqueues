@@ -2,9 +2,9 @@ package storage
 
 import (
 	"log"
-	"os"
 	"time"
 
+	"github.com/divyag9/goqueues/packages/config"
 	"github.com/divyag9/goqueues/packages/queue"
 	mgo "gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
@@ -15,12 +15,12 @@ type Mongo struct {
 	Session *mgo.Session
 }
 
-// GetMongoDBSession returns the mongoDB session to pass to the handler
-func GetMongoDBSession() *mgo.Session {
+// GetSession returns the mongoDB session to pass to the handler
+func (sd Details) GetSession(config *config.Details) (interface{}, error) {
 	// Get dial information for mongodb
-	host := os.Getenv("MONGO_DB_HOST")
-	username := os.Getenv("MONGO_DB_USERNAME")
-	password := os.Getenv("MONGO_DB_PASSWORD")
+	host := config.DBHost
+	username := config.DBUsername
+	password := config.DBPassword
 	mongoDBDialInfo := &mgo.DialInfo{
 		Addrs:    []string{host},
 		Timeout:  60 * time.Second,
@@ -30,10 +30,10 @@ func GetMongoDBSession() *mgo.Session {
 	// Dial mongoDB
 	dbsession, err := mgo.DialWithInfo(mongoDBDialInfo)
 	if err != nil {
-		log.Fatalln("cannot dial mongo: ", err)
+		return nil, err
 	}
 	log.Println("connected to mongodb")
-	return dbsession
+	return dbsession, nil
 }
 
 // Get returns the details of a particular queue
