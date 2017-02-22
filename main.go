@@ -14,9 +14,9 @@ import (
 )
 
 func main() {
-	storageDetails := &storage.Details{}
+	mongoDB := &storage.Mongo{}
 	configDetails := validateAndSetConfigDetails()
-	dbSession, err := storage.GetSession(storageDetails, configDetails)
+	dbSession, err := storage.GetSession(mongoDB, configDetails)
 	if err != nil {
 		log.Fatal("Cannot connect to database")
 	}

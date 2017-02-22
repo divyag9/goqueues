@@ -16,7 +16,7 @@ type Mongo struct {
 }
 
 // GetSession returns the mongoDB session to pass to the handler
-func (sd Details) GetSession(config *config.Details) (interface{}, error) {
+func (m *Mongo) GetSession(config *config.Details) (interface{}, error) {
 	// Get dial information for mongodb
 	host := config.DBHost
 	username := config.DBUsername

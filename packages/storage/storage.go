@@ -5,10 +5,6 @@ import (
 	"github.com/divyag9/goqueues/packages/queue"
 )
 
-// Details contains storage information
-type Details struct {
-}
-
 // Database contains methods for accessing the database information
 type Database interface {
 	GetSession(*config.Details) (interface{}, error)
